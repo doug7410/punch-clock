@@ -1,0 +1,48 @@
+<p><%= link_to 'Back to job list', jobs_path  %> </p>
+<h3> <%= @job.name %> </h3>
+<ul class="punch_list">
+	<% @job.punches.each do |punch| %>
+	<li>
+		<%= "Punch #{punch.punch_type}: #{format_datetime(punch.created_at)}" %>
+		<strong>
+			<% if punch.time_since_last and punch.punch_type == 'out' %>
+			<%= "Time on the clock: #{time_on_punch(punch)}" %>
+			<% end %>
+		</strong>
+	</li>
+	<% end %>
+</ul>
+
+	<h4>
+		Total time on this job: <%= total_time_on_job(@job) %>
+	</h4>
+	<div>
+		<% if @job.punches.any? %>
+
+    <% if @job.punches.last.punch_type == 'out' %>
+      <%= form_for [@job, @punch] do |f| %>
+      	<%= f.hidden_field :job_page, value: 1  %>
+        <%= f.hidden_field :job_id, value: @job.id %>
+        <%= f.hidden_field :punch_type, value: 'in' %>
+        <%= f.submit 'Punch In' , class: 'btn btn-success' %>
+      <% end %>  
+    <% else %>
+      <%= form_for [@job, @punch] do |f| %>
+      	<%= f.hidden_field :job_page, value: 1  %>
+        <%= f.hidden_field :job_id, value: @job.id %>
+        <%= f.hidden_field :punch_type, value: 'out' %>
+        <%= f.submit 'Punch Out' , class: 'btn btn-success' %>
+      <% end %>  
+    <% end %>   
+  
+  <% else %>
+
+    <%= form_for [@job, @punch] do |f| %>
+    	<%= f.hidden_field :job_page, value: 1  %>
+      <%= f.hidden_field :job_id, value: @job.id %>
+      <%= f.hidden_field :punch_type, value: 'in' %>
+      <%= f.submit 'Punch In' , class: 'btn btn-success' %>
+    <% end %>
+
+  <% end %>
+	</div>

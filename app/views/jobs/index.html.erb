@@ -1,0 +1,44 @@
+<% @jobs.each do |job| %>
+
+<div class="well span8">
+  <div>
+    <h4>Job Title: <%= link_to job.name, job_path(job) %></h4>
+    <p><strong>Description:</strong> <%= job.description %></p>
+  </div>
+
+  <p>
+    <%= render 'current_punch', job: job %>
+  </p>
+  <div class="buttons">
+  <% if job.punches.any? %>
+
+    <% if job.punches.last.punch_type == 'out' %>
+      <%= form_for [job, @punch] do |f| %>
+        <%= f.hidden_field :job_id, value: job.id %>
+        <%= f.hidden_field :punch_type, value: 'in' %>
+        <%= f.submit 'Punch In' , class: 'btn btn-success' %>
+      <% end %>  
+    <% else %>
+      <%= form_for [job, @punch] do |f| %>
+        <%= f.hidden_field :job_id, value: job.id %>
+        <%= f.hidden_field :punch_type, value: 'out' %>
+        <%= f.submit 'Punch Out' , class: 'btn btn-success' %>
+      <% end %>  
+    <% end %>   
+  
+  <% else %>
+
+    <%= form_for [job, @punch] do |f| %>
+      <%= f.hidden_field :job_id, value: job.id %>
+      <%= f.hidden_field :punch_type, value: 'in' %>
+      <%= f.submit 'Punch In' , class: 'btn btn-success' %>
+    <% end %>
+
+  <% end %>
+  
+  <h3>Total Time: <%= total_time_on_job(job) %></h3>
+
+  </div>
+</div>  
+
+<% end %>
