@@ -22,7 +22,7 @@
       <%= form_for [job, @punch] do |f| %>
         <%= f.hidden_field :job_id, value: job.id %>
         <%= f.hidden_field :punch_type, value: 'out' %>
-        <%= f.submit 'Punch Out' , class: 'btn btn-success' %>
+        <%= f.submit 'Punch Out' , class: 'btn btn-warning' %>
       <% end %>  
     <% end %>   
   
