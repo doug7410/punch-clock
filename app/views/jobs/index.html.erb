@@ -13,27 +13,13 @@
   <% if job.punches.any? %>
 
     <% if job.punches.last.punch_type == 'out' %>
-      <%= form_for [job, @punch] do |f| %>
-        <%= f.hidden_field :job_id, value: job.id %>
-        <%= f.hidden_field :punch_type, value: 'in' %>
-        <%= f.submit 'Punch In' , class: 'btn btn-success' %>
-      <% end %>  
+      <%= render 'form' , job: job %>
     <% else %>
-      <%= form_for [job, @punch] do |f| %>
-        <%= f.hidden_field :job_id, value: job.id %>
-        <%= f.hidden_field :punch_type, value: 'out' %>
-        <%= f.submit 'Punch Out' , class: 'btn btn-warning' %>
-      <% end %>  
+      <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job: job %> 
     <% end %>   
   
   <% else %>
-
-    <%= form_for [job, @punch] do |f| %>
-      <%= f.hidden_field :job_id, value: job.id %>
-      <%= f.hidden_field :punch_type, value: 'in' %>
-      <%= f.submit 'Punch In' , class: 'btn btn-success' %>
-    <% end %>
-
+    <%= render 'form' , job: job %>
   <% end %>
   
   <h3>Total Time: <%= total_time_on_job(job) %></h3>

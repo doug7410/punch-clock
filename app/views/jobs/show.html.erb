@@ -18,31 +18,12 @@
   </h4>
   <div>
     <% if @job.punches.any? %>
-
-    <% if @job.punches.last.punch_type == 'out' %>
-      <%= form_for [@job, @punch] do |f| %>
-        <%= f.hidden_field :job_page, value: 1  %>
-        <%= f.hidden_field :job_id, value: @job.id %>
-        <%= f.hidden_field :punch_type, value: 'in' %>
-        <%= f.submit 'Punch In' , class: 'btn btn-success' %>
-      <% end %>  
+      <% if @job.punches.last.punch_type == 'out' %>
+        <%= render 'form', job_page: true , job: @job %>
+      <% else %>
+        <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job_page: true, job: @job %> 
+      <% end %>   
     <% else %>
-      <%= form_for [@job, @punch] do |f| %>
-        <%= f.hidden_field :job_page, value: 1  %>
-        <%= f.hidden_field :job_id, value: @job.id %>
-        <%= f.hidden_field :punch_type, value: 'out' %>
-        <%= f.submit 'Punch Out' , class: 'btn btn-success' %>
-      <% end %>  
-    <% end %>   
-  
-  <% else %>
-
-    <%= form_for [@job, @punch] do |f| %>
-      <%= f.hidden_field :job_page, value: 1  %>
-      <%= f.hidden_field :job_id, value: @job.id %>
-      <%= f.hidden_field :punch_type, value: 'in' %>
-      <%= f.submit 'Punch In' , class: 'btn btn-success' %>
+      <%= render 'form', job_page: true , job: @job %>
     <% end %>
-
-  <% end %>
   </div>
