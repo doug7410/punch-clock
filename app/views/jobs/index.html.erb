@@ -1,4 +1,18 @@
-<% @jobs.each do |job| %>
+<div class="well">
+  <h4>Hello <%= current_user.username.capitalize %></h4>
+  <% if @user.jobs == 0 %>
+    You dont have any jobs. 
+  <% else %>
+    You currently have <strong><%= @user.jobs.size %></strong> jobs.
+  <% end %>
+  <br><br>
+  <%= link_to 'Add a Job', new_job_path, class: 'btn btn-info' %>
+
+</div>
+
+
+
+<% @user.jobs.each do |job| %>
 
 <div class="well span8">
   <div>
@@ -11,13 +25,11 @@
   </p>
   <div class="buttons">
   <% if job.punches.any? %>
-
     <% if job.punches.last.punch_type == 'out' %>
       <%= render 'form' , job: job %>
     <% else %>
       <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job: job %> 
     <% end %>   
-  
   <% else %>
     <%= render 'form' , job: job %>
   <% end %>

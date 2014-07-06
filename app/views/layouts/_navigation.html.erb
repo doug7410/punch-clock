@@ -2,6 +2,11 @@
   <li>
     <%= link_to "Punch Clock!", root_path, :class => 'brand' %>
   </li>
-  <%= link_to 'Add a Job', new_job_path, class: 'btn btn-primary' %>
+
+  <% if logged_in? %>
+  <li>
+    <%= link_to 'Log Out', logout_path %>
+  </li>
+  <% end %>
 </ul>
 <h5 class="current_time">Current Time: <%= Time.now.strftime("%l:%M:%S%p %Z on %B %d, %Y") %> </h5>

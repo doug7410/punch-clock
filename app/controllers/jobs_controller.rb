@@ -1,8 +1,13 @@
 class JobsController < ApplicationController
 
   def index
-    @jobs = Job.all
-    @punch = Punch.new
+
+    if !logged_in?
+      redirect_to login_path
+    else
+      @user = User.find(current_user)
+      @punch = Punch.new
+    end
   end
 
   def show
@@ -17,7 +22,7 @@ class JobsController < ApplicationController
   def create
     
     @job = Job.new(job_params)
-
+    @job.creator = current_user
     if @job.save
       flash[:notice] = "A new job has been added"
       redirect_to jobs_path

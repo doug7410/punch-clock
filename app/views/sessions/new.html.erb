@@ -1,0 +1,27 @@
+<%= render 'shared/content_title', title: 'Log In' %>
+
+<div class="well">
+
+  
+
+  <%= form_tag '/login', class: 'form-horizontal' do %>
+  <h4>Please log in below or <%= link_to 'create a new account.', register_path %> </h4>
+  <br>
+    <div class="control-group">
+      <%= label_tag :username, nil, class: 'control-label' %>
+        <div class="controls">
+          <%= text_field_tag :username, params[:username] || '' %>
+        </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag :password, nil, class: 'control-label' %>
+        <div class="controls">
+          <%= password_field_tag :password, params[:password] || '' %>
+        </div>
+    </div>
+      <div class="controls">
+        <%= submit_tag 'Login', class: 'btn' %>
+      </div>
+
+  <% end %>
+</div>
