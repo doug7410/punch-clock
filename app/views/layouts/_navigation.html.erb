@@ -9,4 +9,4 @@
   </li>
   <% end %>
 </ul>
-<h5 class="current_time">Current Time: <%= Time.now.strftime("%l:%M:%S%p %Z on %B %d, %Y") %> </h5>
+<h5 class="current_time">Current Time: <%= format_datetime(Time.now.in_time_zone(Time.zone.name)) %> </h5>
