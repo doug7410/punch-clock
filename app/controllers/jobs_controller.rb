@@ -1,5 +1,7 @@
 class JobsController < ApplicationController
 
+  before_action :find_job, only: [:edit, :show, :update]
+
   def index
 
     if !logged_in?
@@ -11,7 +13,6 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.find(params[:id])
     @punch = Punch.new
   end 
 
@@ -32,11 +33,30 @@ class JobsController < ApplicationController
 
   end
 
+  def edit; end
+
+  def update
+
+
+
+    if @job.update(job_params)
+      flash[:notice] = "#{@job.name} has been updated"
+      redirect_to job_path(@job)
+    else
+      render :edit
+    end
+
+  end
+
 
   private
 
   def job_params
-    params.require(:job).permit(:name, :description, :notes)
+    params.require(:job).permit(:name, :description, :notes, :status)
+  end
+
+  def find_job
+    @job = Job.find(params[:id])
   end
 
 end

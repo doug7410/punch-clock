@@ -4,4 +4,11 @@ class Job < ActiveRecord::Base
 
   validates :name, presence: true
   validates :description, presence: true
+
+  after_create :set_status
+
+
+  def set_status
+    self.status = true
+  end
 end

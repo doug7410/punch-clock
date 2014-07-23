@@ -1,5 +1,9 @@
 <p><%= link_to 'Back to job list', jobs_path  %> </p>
+<p><%= link_to '[edit project]', edit_job_path(@job) %></p>
 <h3> <%= @job.name %> </h3>
+<div>
+  This project is currently: <%= @job.status ? "active" : "not active" %>
+</div>
 <ul class="punch_list">
   <% @job.punches.each do |punch| %>
   <li>
