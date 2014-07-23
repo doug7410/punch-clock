@@ -1,3 +1,7 @@
+== App Mockup
+This was created by Thupten Nyima http://github.com/vajradog
+Mockup link - http://pho.to/6GJq7
+
 == Getting Started
 
 1. Make sure you have rails version 4. Type "rails -v" to make sure.
