@@ -10,6 +10,7 @@ class JobsController < ApplicationController
       @user = User.find(current_user)
       @punch = Punch.new
     end
+    #git test 
   end
 
   def show
