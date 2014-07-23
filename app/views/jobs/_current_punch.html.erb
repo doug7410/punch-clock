@@ -1,4 +1,4 @@
 <% if job.punches.any? %>  
-  <%= "You punched <strong>#{job.punches.last.punch_type}</strong>".html_safe %>
+  <%= "You punched <strong> in or out </strong>".html_safe %>
   <%= "at #{format_datetime(job.punches.last.created_at)}" %>
 <% end %>  

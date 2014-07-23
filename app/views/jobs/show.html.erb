@@ -4,30 +4,31 @@
 <div>
   This project is currently: <%= @job.status ? "active" : "not active" %>
 </div>
-<ul class="punch_list">
-  <% @job.punches.each do |punch| %>
-  <li>
-    <%= "Punch #{punch.punch_type}: #{format_datetime(punch.created_at)}" %>
-    <strong>
-      <% if punch.time_since_last and punch.punch_type == 'out' %>
-      <%= "Time on the clock: #{time_on_punch(punch)}" %>
-      <% end %>
-    </strong>
-  </li>
-  <% end %>
-</ul>
 
-  <h4>
-    Total time on this job: <%= total_time_on_job(@job) %>
-  </h4>
-  <div>
-    <% if @job.punches.any? %>
-      <% if @job.punches.last.punch_type == 'out' %>
-        <%= render 'form', job_page: true , job: @job %>
-      <% else %>
-        <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job_page: true, job: @job %> 
-      <% end %>   
-    <% else %>
-      <%= render 'form', job_page: true , job: @job %>
-    <% end %>
-  </div>
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Total</th>    
+  </tr>
+  <% @job.punches.each do |punch| %>
+    <tr>
+      <td> <%= punch_in_date(punch.created_at) %> </td>
+      <td><%= punch_in_time(punch.created_at) %></td>
+      <td><%= punch_out_time(punch.punch_out) %></td>
+      <td> <%= punch.time_on_punch %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<h4>
+  Total time on this job: <%= format_total_time(@job.total_time_on_job) %>
+</h4>
+<div>
+  <% if @job.currently_punched_in? %>
+    <%= link_to 'Punch Out', punch_out_job_path(@job), method: 'POST', class: 'btn btn-danger'  %>
+  <% else %>  
+    <%= link_to 'Punch In', punch_in_job_path(@job), method: 'POST',  class: 'btn btn-success'  %>
+  <% end %>   
+</div>

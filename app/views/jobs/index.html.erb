@@ -25,7 +25,7 @@
   </p>
   <div class="buttons">
   <% if job.punches.any? %>
-    <% if job.punches.last.punch_type == 'out' %>
+    <% if job.punches.last %>
       <%= render 'form' , job: job %>
     <% else %>
       <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job: job %> 

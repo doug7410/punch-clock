@@ -1,26 +1,42 @@
 class PunchesController < ApplicationController
+  before_action :get_job
 
-  def create
-    @job = Job.find(params[:job_id])
+  def punch_in
+    #binding.pry
+    
 
-    if @job.punches.any?
-      last_punch = @job.punches.last.created_at
-      time_since_last_punch = Time.now.getutc - last_punch
-    end
+      #time_since_last_punch = Time.now.getutc - last_punch
 
-    @punch = Punch.create(params.require(:punch).permit(:job_id, :punch_type, :notes))		
-    @punch.time_since_last = time_since_last_punch
+    @punch = Punch.create(job: @job)		
 
     if @punch.save
-      flash[:notice] = "You have punched #{@job.punches.last.punch_type} to #{@job.name}"
-        if params[:punch][:job_page]
-          redirect_to job_path(@job)
-        else
-          redirect_to jobs_path
-        end
+      flash[:notice] = "You have punched in to #{@job.name}"
+      redirect_to :back  
     else
         render 'jobs/index'
     end
+  end
+
+  def punch_out
+    #binding.pry
+    punch = @job.current_punch_in
+    
+
+    if @job.current_punch_in && punch.update(punch_out: Time.now)
+      flash[:notice] = "You have punched out of #{@job.name}"
+      redirect_to :back  
+    else
+        flash[:error] = "You are not punched in to #{@job.name}, so you can't punch out."
+        redirect_to job_path(@job)
+    end
+
+
+  end
+
+  private
+
+  def get_job
+    @job = Job.find(params[:id])
   end
 
 end
