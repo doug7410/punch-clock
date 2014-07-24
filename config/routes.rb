@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
 
   resources :jobs, except: [:destroy] do
-    resources :punches, only: [:create]
+    member do
+      post 'punch_in', to: 'punches#punch_in'
+      post 'punch_out', to: 'punches#punch_out'
+    end
   end
 
   resources :users, except: [:destroy]
