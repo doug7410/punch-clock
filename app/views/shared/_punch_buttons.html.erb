@@ -1,0 +1,5 @@
+<% if job.currently_punched_in? %>
+  <%= link_to 'Punch Out', punch_out_job_path(job), method: 'POST', class: 'btn btn-danger'  %>
+<% else %>  
+  <%= link_to 'Punch In', punch_in_job_path(job), method: 'POST',  class: 'btn btn-success'  %>
+<% end %>   

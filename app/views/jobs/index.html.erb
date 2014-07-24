@@ -17,26 +17,18 @@
 <div class="well span8">
   <div>
     <h4>Job Title: <%= link_to job.name, job_path(job) %></h4>
-    <p><strong>Description:</strong> <%= job.description %></p>
+    <p>
+      <strong>Description:</strong> <%= job.description %>
+    </p>
   </div>
-
-  <p>
-    <%= render 'current_punch', job: job %>
-  </p>
+  <%= render 'current_punch', job: job %>
   <div class="buttons">
-  <% if job.punches.any? %>
-    <% if job.punches.last %>
-      <%= render 'form' , job: job %>
-    <% else %>
-      <%= render 'form' , type: 'out', btn_label: 'Punch Out', btn_class: 'btn btn-danger', job: job %> 
-    <% end %>   
-  <% else %>
-    <%= render 'form' , job: job %>
-  <% end %>
-  
-  <h3>Total Time: <%= total_time_on_job(job) %></h3>
-
+    <%= render 'shared/punch_buttons', job: job %>
   </div>
+  <h3>
+    Total Time: <%= format_total_time(job.total_time_on_job) %>
+  </h3>
+
 </div>  
 
 <% end %>

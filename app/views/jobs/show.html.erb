@@ -26,9 +26,5 @@
   Total time on this job: <%= format_total_time(@job.total_time_on_job) %>
 </h4>
 <div>
-  <% if @job.currently_punched_in? %>
-    <%= link_to 'Punch Out', punch_out_job_path(@job), method: 'POST', class: 'btn btn-danger'  %>
-  <% else %>  
-    <%= link_to 'Punch In', punch_in_job_path(@job), method: 'POST',  class: 'btn btn-success'  %>
-  <% end %>   
+  <%= render 'shared/punch_buttons', job: @job %>
 </div>

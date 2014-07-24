@@ -20,6 +20,12 @@ class Job < ActiveRecord::Base
     current_punch_in
   end
 
+  def current_punch_type
+    if self.punches.any?
+      self.current_punch_in ? "In" : "Out"
+    end
+  end       
+
   def total_time_on_job
     total = 0
     self.punches.each do |punch|
