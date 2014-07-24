@@ -20,11 +20,16 @@
     <p>
       <strong>Description:</strong> <%= job.description %>
     </p>
+    <p>Last Punch</p>
+    <%= render 'current_punch', job: job %>
   </div>
-  <%= render 'current_punch', job: job %>
+  
   <div class="buttons">
     <%= render 'shared/punch_buttons', job: job %>
   </div>
+  <p>
+    <%= link_to "view all punches for #{job.name}", job_path(job) %>
+  </p>
   <h3>
     Total Time: <%= format_total_time(job.total_time_on_job) %>
   </h3>
