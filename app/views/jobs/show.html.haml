@@ -1,0 +1,28 @@
+%p
+  = link_to 'Back to job list', jobs_path
+%p
+  =link_to '[edit project]', edit_job_path(@job) 
+%h3
+  = @job.name
+.status
+  This project is currently: 
+  = @job.status ? "active" : "not active"
+
+%table.table.table-striped
+  %tr
+    %th Date
+    %th Start Time
+    %th End Time
+    %th Total
+  
+  - @job.punches.each do |punch|
+    %tr
+      %td #{punch_in_date(punch.created_at)} 
+      %td #{punch_in_time(punch.created_at)}
+      %td #{punch_out_time(punch.punch_out)}
+      %td #{punch.time_on_punch} 
+
+%h4 Total time on this job: #{format_total_time(@job.total_time_on_job)}
+
+.punch-button
+  = render 'shared/punch_buttons', job: @job 
