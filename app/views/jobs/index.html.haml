@@ -1,0 +1,29 @@
+.well
+  %h4 
+    Hello #{current_user.username.capitalize}
+    - if @user.jobs == 0 
+      You dont have any jobs. 
+    - else
+      You currently have 
+      %strong #{@user.jobs.size} jobs.
+  %br
+  %br
+  = link_to 'Add a Job', new_job_path, class: 'btn btn-info' 
+
+- @user.jobs.each do |job|
+  .well.span8
+    .job_info
+      %h4 Job Title: #{link_to job.name, job_path(job)}
+      %p
+        %strong Description: #{job.description}
+      %p 
+        Last Punch
+        = render 'current_punch', job: job
+    
+    .buttons
+      = render 'shared/punch_buttons', job: job
+      %p
+        = link_to "view all punches for #{job.name}", job_path(job)
+    %h3
+      Total Time: #{format_total_time(job.total_time_on_job)}
+  

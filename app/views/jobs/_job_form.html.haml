@@ -1,0 +1,15 @@
+= render 'shared/errors', object: @job
+= form_for(@job) do |f| 
+  .new_job_form
+    = f.label :name 
+    = f.text_field :name 
+
+  .form_fields
+    = f.label :description
+    = f.text_area :description
+  .form_fields
+    = f.label :active, class: 'checkbox inline'
+    = f.check_box :status, class: 'checkbox'
+    = f.submit @job.new_record? ? 'Add Project' : 'Update Project', class: 'btn'   
+
+
