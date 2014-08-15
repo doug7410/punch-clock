@@ -1,0 +1,8 @@
+- if object.errors.any?
+  .row
+    .alert.alert-error.span8
+      %h5 There were errors
+      %ul
+        - object.errors.full_messages.each do |msg| 
+          %li 
+            = msg

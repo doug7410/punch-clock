@@ -1,0 +1,16 @@
+- if job.punches.any? 
+  %table.table.table-striped
+    %tr
+      %th Date
+      %th Start Time
+      %th End Time
+      %th Total    
+    %tr
+      %td 
+        = punch_in_date(job.punches.last.created_at) 
+      %td 
+        = punch_in_time(job.punches.last.created_at)
+      %td 
+        = punch_out_time(job.punches.last.punch_out)
+      %td 
+        = job.punches.last.time_on_punch 
